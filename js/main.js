@@ -239,6 +239,9 @@ function clear() {
     resetValidation();
 }
 
+
+// * ================= [ Custom Modal ] =======================
+
 function wrongPopupMsg(title,msg) {
     // This function take title and message of the error pop-up and add these data in our custom pop-up
     lightBoxItemHeader.classList.remove("bg-success", "justify-content-center");
@@ -257,7 +260,6 @@ function successPopupMsg(title,msg) {
     lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p class="fs-4">${msg}</p>`;
 }
 
-// * ================= [ Custom Modal ] =======================
 
 function openPopupMsg() {
     // this method to trigger the pop-up
