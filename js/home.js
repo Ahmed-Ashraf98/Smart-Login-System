@@ -20,7 +20,7 @@ if(!localStorage.getItem(LoggedInUserKey)){
     userObj = getLoggedInUser();
     userData.innerHTML = `
         <h1>Hello ${userObj.name} <i class="fa-solid fa-face-smile"></i></h1>
-        <p class="h4">Yor email is : ${userObj.email} </p>
+        <p class="h4 mt-5">Yor email is : ${userObj.email} </p>
     `;
 })()
 

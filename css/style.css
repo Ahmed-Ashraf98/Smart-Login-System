@@ -1,4 +1,6 @@
 
+/** =========================== Setup Fonts ================================= */
+
 @font-face {
     font-family: Nunito;
     src: url("../webfonts/Nunito/Nunito-Regular.ttf");
@@ -11,8 +13,16 @@
     font-weight: 500;
 }
 
-.start-page{
+/** =========================== General Setup ================================= */
+
+body{
     font-family:Nunito, sans-serif;
+}
+
+
+/** =========================== Login / SignUp Setup ================================= */
+
+.start-page{
     background: linear-gradient(346deg, rgba(39,116,170,1) 35%, rgba(23,173,182,1) 100%);
     background-repeat: no-repeat;
 }
@@ -30,8 +40,43 @@
     cursor: pointer;
 }
 
+/** =========================== Home Setup ================================= */
+
 .navbar-brand{
     display: inline-block;
     word-break: break-all;
     white-space: wrap;
+    color: #050C9C;
+}
+
+#homePage{
+    background-color: #A7E6FF ;
+}
+
+#userData{
+    color:#050C9C;
+    background-color: #c1edff;
+    word-break: break-all;
+    white-space: wrap;
+}
+
+.navbar{
+  color: #050C9C;
+  background-color: #c1edff;  
+}
+
+.navbar-brand:focus, .navbar-brand:hover {
+    color: #050C9C;
+}
+
+.btn-outline-custom{
+    --bs-btn-color: #3007ff;
+    --bs-btn-border-color: #050C9C;
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #0567a9;
+    --bs-btn-hover-border-color: #00548d;
+    --bs-btn-focus-shadow-rgb: 255, 193, 7;
+    --bs-btn-active-color: #ffffff;
+    --bs-btn-active-bg: #044182;
+    --bs-btn-active-border-color: #043465;
 }
