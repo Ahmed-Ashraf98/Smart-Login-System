@@ -79,8 +79,6 @@ if(
 
 //* =============================== [ Navigation ] ============================
 
-console.log("OKKKKK")
-
 function goToLogin(){
     var originUrl = window.location.origin;
     var runOnCloud = window.location.port == "" ? true : false;
