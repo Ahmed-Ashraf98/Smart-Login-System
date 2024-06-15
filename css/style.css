@@ -83,13 +83,21 @@ body{
 }
 
 .navbar{
+  --bs-navbar-toggler-border-color: rgba(5, 12, 156, 0.15);
   color: #050C9C;
   background-color: #dbf0f8;  
+}
+
+.navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: 0 0 0 var(--bs-navbar-toggler-focus-width) #050C9C;
 }
 
 .navbar-brand:focus, .navbar-brand:hover {
     color: #050C9C;
 }
+
 
 .btn-outline-custom{
     --bs-btn-color: #3007ff;
