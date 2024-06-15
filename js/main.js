@@ -73,6 +73,7 @@ if(
     )
     && currentLoggedInUser)
     {
+    console.log("Backkkkkkkkkkkkkk")
     alert("You are already logged-in, to sign-out click on sign out in the home page")
     goToHome();
 }
