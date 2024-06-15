@@ -63,8 +63,8 @@ function isEmpty(element){
 
 function setInputValidaty(element,feedbackEle,newStatus,classToRmv,classToAdd,msg){
     inputsRegex[element.id].status = newStatus;
-    element.classList.remove(classToRmv);
-    element.classList.add(classToAdd);
+    classToRmv && element.classList.remove(classToRmv);
+    classToAdd && element.classList.add(classToAdd);
     feedbackEle.innerHTML = msg;
 }
 
@@ -84,29 +84,40 @@ function validateInput(element) {
     // - In the sign-up page we need to check if the input is empty or not
 
     if(isEmpty(element)){
-      setInputValidaty(element,feedbackElement,false,"is-valid","is-invalid","Field is required");
+      setInputValidaty(element,feedbackElement,false,null,"is-invalid","Field is required");
+    }else{
+        setInputValidaty(element,feedbackElement,true,"is-invalid",null,null);
     }
     
-    else if (inputsRegex[element.id].pattern.test(eleVal)) {
-        
-        if (element.id == "userEmail" && emailExists(eleVal) != undefined && isSignUp) {
-            setInputValidaty(element,feedbackElement,false,"is-valid","is-invalid","Account is already available for this email address");
-        } else {
-            setInputValidaty(element,feedbackElement,true,"is-invalid","is-valid",null);
+    if(isSignUp){
+
+        if(isEmpty(element)){
+            setInputValidaty(element,feedbackElement,false,"is-valid","is-invalid","Field is required");
         }
 
-    } else {
-        var msg;
-        switch (element.id) {
-            case "userName": msg = "Inavlid User Name";
-                break;
-            case "userEmail": msg = "Inavlid Email";
-                break;
-            case "userPassword": msg = "Inavlid Password";
-                break;
+        else if (inputsRegex[element.id].pattern.test(eleVal)) {
+        
+            if (element.id == "userEmail" && emailExists(eleVal) != undefined) {
+                setInputValidaty(element,feedbackElement,false,"is-valid","is-invalid","Account is already available for this email address");
+            } else {
+                setInputValidaty(element,feedbackElement,true,"is-invalid","is-valid",null);
+            }
+    
+        } else {
+            var msg;
+            switch (element.id) {
+                case "userName": msg = "Inavlid User Name";
+                    break;
+                case "userEmail": msg = "Inavlid Email";
+                    break;
+                case "userPassword": msg = "Inavlid Password";
+                    break;
+            }
+            setInputValidaty(element,feedbackElement,false,"is-valid","is-invalid",msg);
         }
-        setInputValidaty(element,feedbackElement,false,"is-valid","is-invalid",msg);
     }
+
+   
 }
 
 
@@ -284,7 +295,7 @@ function loginUser() {
     validateAllInputs();
 
     // TODO: make the user mandatory to enter the required fields
-
+    console.log(inputsRegex)
     if(!allInputsAreValid()){
         wrongInputMsg(`<span class="text-danger">Can't </span>Login`,"All Fields Are Required");
         openPopupMsg();
