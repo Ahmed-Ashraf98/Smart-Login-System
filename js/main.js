@@ -232,8 +232,7 @@ function wrongPopupMsg(title,msg) {
     lightBoxItemHeader.innerHTML = `
     <i id="closeBoxBtn" onclick="closePopupMsg()" class="fa-regular fa-circle-xmark m-2 fs-4 text-white"></i>           
     `;
-    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3>
-    <p>${msg}</p>`
+    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p>${msg}</p>`;
 }
 
 function successPopupMsg(title,msg) {
@@ -241,8 +240,7 @@ function successPopupMsg(title,msg) {
     lightBoxItemHeader.classList.add("bg-success", "justify-content-center");
     lightBoxItemHeader.classList.remove("bg-danger", "justify-content-end");
     lightBoxItemHeader.innerHTML = `<i class="fa-solid fa-circle-check fs-1 text-white p-3"></i>`;
-    lightBoxItemMessage.innerHTML = `<h3 class="mt-5"><span class="text-success">Congratulations!</span> your account has been created</h3>
-            <p>We will redirect you to the login page automatically after 3 seconds</p>`;
+    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p>${msg}</p>`;
 }
 
 // * ================= [ Custom Modal ] =======================
@@ -261,6 +259,8 @@ function closePopupMsg() {
 
 function createUser() {
 
+    var msgTitle;
+    var message;
 
     // Validate pattern for all inputs as final check
     validateAllInputs();
@@ -269,9 +269,9 @@ function createUser() {
     var emailIsUsed = emailExists(userEmail.value);
     // Throw error if email already exists
     if(emailIsUsed != undefined){
-        var title =`<span class="text-danger">Can't </span>Create Account`;
-        var message = "An account is already available for this email address..., kindly provide another email account and try again";
-        wrongPopupMsg(title,message);
+        msgTitle =`<span class="text-danger">Can't </span>Create Account`;
+        message = "An account is already available for this email address..., kindly provide another email account and try again";
+        wrongPopupMsg(msgTitle,message);
         openPopupMsg();
         return;
     }
@@ -279,9 +279,8 @@ function createUser() {
     // Throw error if inputs are not valid
     if (!allInputsAreValid()) {
 
-        var title = `<span class="text-danger">Can't </span>Create Account`;
-
-        var message = `
+        msgTitle = `<span class="text-danger">Can't </span>Create Account`;
+        message = `
         <p>Kindly check the following rules to create an account</p>
         <ul class="list-unstyled d-flex flex-column align-items-start">
           <li class="ps-sm-2 mb-2"><i class="fa-regular fa-circle-right text-danger"></i> User Name must contain at least 3 characters and NO special character</li>
@@ -297,7 +296,7 @@ function createUser() {
         </ul>`;
 
         // Display Pop-up
-        wrongPopupMsg(title,message);
+        wrongPopupMsg(msgTitle,message);
         openPopupMsg();
         return;
     }
@@ -315,7 +314,11 @@ function createUser() {
     usersList.push(user); // add the user into the list
     clear(); // clear form inputs
     setUsers(usersList); // add the user in the local storage
-    successPopupMsg(); // set ssignup successful message
+
+
+    msgTitle =`<span class="text-success">Congratulations!</span> your account has been created`;
+    message=`We will redirect you to the login page automatically after 3 seconds`;
+    successPopupMsg(msgTitle,message); // set ssignup successful message
     openPopupMsg(); // Dispaly the popup
 
     // Automatically redirct the user to the login page after 3s
