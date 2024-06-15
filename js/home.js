@@ -1,9 +1,11 @@
 //* ========================= Get Elements ============================
 
 var userData = document.getElementById("userData");
-var LoggedInUserKey = "currentUser";
 var loguotBtn = document.getElementById("loguotBtn");
 
+//* ================== [ Setup vars ] ============================
+
+var LoggedInUserKey = "currentUser";
 
 //* ================= [ Start Section ] ============================
 

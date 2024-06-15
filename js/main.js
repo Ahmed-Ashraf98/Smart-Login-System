@@ -50,7 +50,7 @@ if (localStorage.getItem(LoggedInUserKey)) {
 
 // console.log(window.location)
 
-if(window.location.pathname == "/" && currentLoggedInUser){
+if( (window.location.pathname == "/"  || window.location.pathname == "/pages/signup.html" ) && currentLoggedInUser){
     alert("You already logged in, going to home, to sign-out click on sign ou in the home page")
     window.location.pathname = "/pages/home.html";
 }
@@ -348,9 +348,13 @@ function getLoggedInUser() {
 
 //* ================= [ Events Settings ] ======================
 
-/* Note:
- we used < ? > because the elements will not be exists in all pages and withou < ? >,
- the console will throw an error because you are trying to add event for undefined 
+//& Notes:
+/* 
+ - We used < ? > because the elements will not be exists in all pages and without < ? >,
+ the console will throw an error because you are trying to add event for undefined.
+
+ -We used input event in case the user try copy-and-paste, and tor trck the changes
+
 */
 
 userName?.addEventListener("keydown", function (event) {
@@ -381,6 +385,7 @@ userPassword?.addEventListener("keydown", function (event) {
     }
     validateInput(event.target);
 })
+
 userPassword?.addEventListener("input", function (event) {
     if (event.target.getAttribute("data-form-type") == "signup") {
         validateInput(event.target);
