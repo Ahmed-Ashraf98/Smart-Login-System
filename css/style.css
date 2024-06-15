@@ -77,14 +77,14 @@ body{
 
 #userData{
     color:#050C9C;
-    background-color: #c1edff;
+    background-color: #dbf0f8;
     word-break: break-all;
     white-space: wrap;
 }
 
 .navbar{
   color: #050C9C;
-  background-color: #c1edff;  
+  background-color: #dbf0f8;  
 }
 
 .navbar-brand:focus, .navbar-brand:hover {

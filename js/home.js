@@ -14,7 +14,15 @@ var LoggedInUserKey = "currentUser";
 
 if(!localStorage.getItem(LoggedInUserKey)){
     alert("You need to logged in first to be able to see home page , you will be redirected to login page once you click ok")
-    window.location.pathname = "/";
+    goToLogin();
+}
+
+//* ================= [ Navigation ] ============================
+
+function goToLogin(){
+    var originUrl = window.location.origin;
+    var newPath = "/";
+    window.location.replace(originUrl+newPath);
 }
 
 //* ================= [ Display User Data ] ============================
@@ -35,7 +43,7 @@ function logoutUser(){
     // This function for logout the user, this will be called once the user click on logout button
     removeLoggedInUser();
     // Go to login page after loggout automatically   
-    window.location.pathname = "/";
+    goToLogin();
 }
 
 //* ================= [ Local Storage ] ======================

@@ -57,8 +57,22 @@ if (localStorage.getItem(LoggedInUserKey)) {
 */ 
 
 if( (window.location.pathname == "/"  || window.location.pathname == "/pages/signup.html" ) && currentLoggedInUser){
-    alert("You already logged in, going to home, to sign-out click on sign ou in the home page")
-    window.location.pathname = "/pages/home.html";
+    alert("You are already logged-in, to sign-out click on sign out in the home page")
+    goToHome();
+}
+
+//* =============================== [ Navigation ] ============================
+
+function goToLogin(){
+    var originUrl = window.location.origin;
+    var newPath = "/";
+    window.location.replace(originUrl+newPath);
+}
+
+function goToHome(){
+    var originUrl = window.location.origin;
+    var newPath = "/pages/home.html";
+    window.location.replace(originUrl+newPath);
 }
 
 //* ============================== [ Control Form ] ======================
@@ -232,7 +246,7 @@ function wrongPopupMsg(title,msg) {
     lightBoxItemHeader.innerHTML = `
     <i id="closeBoxBtn" onclick="closePopupMsg()" class="fa-regular fa-circle-xmark m-2 fs-4 text-white"></i>           
     `;
-    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p>${msg}</p>`;
+    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p class="fs-4">${msg}</p>`;
 }
 
 function successPopupMsg(title,msg) {
@@ -240,7 +254,7 @@ function successPopupMsg(title,msg) {
     lightBoxItemHeader.classList.add("bg-success", "justify-content-center");
     lightBoxItemHeader.classList.remove("bg-danger", "justify-content-end");
     lightBoxItemHeader.innerHTML = `<i class="fa-solid fa-circle-check fs-1 text-white p-3"></i>`;
-    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p>${msg}</p>`;
+    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p class="fs-4">${msg}</p>`;
 }
 
 // * ================= [ Custom Modal ] =======================
@@ -323,7 +337,7 @@ function createUser() {
 
     // Automatically redirct the user to the login page after 3s
     setTimeout(function(){ 
-        window.location.pathname = "/";
+       goToLogin();
     }, 3000);
 }
 
@@ -372,7 +386,8 @@ function loginUser() {
     var userObj = usersList[userIndex]; // get the user details
     setLoggedInUser(userObj); // set the current logged-in user 
     clear(); // clear the form after successful login
-    window.location.pathname = "/pages/home.html"; // navigate to home page automatically 
+
+    goToHome(); // navigate to home page automatically 
 }
 
 
