@@ -40,6 +40,28 @@ body{
     cursor: pointer;
 }
 
+.other-options a{
+    position: relative;
+}
+
+.other-options a::after{
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: #00548d;
+    bottom:0;
+    left: 0;
+    transition: all 0.5s;
+}
+
+.other-options a:hover{
+    &::after{
+        width: 100%;
+    }
+}
+
+
 /** =========================== Home Setup ================================= */
 
 .navbar-brand{
