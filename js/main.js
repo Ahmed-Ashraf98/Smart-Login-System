@@ -247,9 +247,9 @@ function wrongPopupMsg(title,msg) {
     lightBoxItemHeader.classList.remove("bg-success", "justify-content-center");
     lightBoxItemHeader.classList.add("bg-danger", "justify-content-end");
     lightBoxItemHeader.innerHTML = `
-    <i id="closeBoxBtn" onclick="closePopupMsg()" class="fa-regular fa-circle-xmark m-2 fs-4 text-white"></i>           
+    <i id="closeBoxBtn" onclick="closePopupMsg()" class="fa-regular fa-circle-xmark m-2 fs-5 text-white"></i>           
     `;
-    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p class="fs-4">${msg}</p>`;
+    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p class="fs-5">${msg}</p>`;
 }
 
 function successPopupMsg(title,msg) {
@@ -257,7 +257,7 @@ function successPopupMsg(title,msg) {
     lightBoxItemHeader.classList.add("bg-success", "justify-content-center");
     lightBoxItemHeader.classList.remove("bg-danger", "justify-content-end");
     lightBoxItemHeader.innerHTML = `<i class="fa-solid fa-circle-check fs-1 text-white p-3"></i>`;
-    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p class="fs-4">${msg}</p>`;
+    lightBoxItemMessage.innerHTML = `<h3 class="mt-5">${title}</h3><p class="fs-5">${msg}</p>`;
 }
 
 
