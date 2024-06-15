@@ -286,7 +286,7 @@ function createUser() {
     // Throw error if email already exists
     if(emailIsUsed != undefined){
         msgTitle =`<span class="text-danger">Can't </span>Create Account`;
-        message = "An account is already available for this email address..., kindly provide another email account and try again";
+        message = "An account is already available for this email address...,<br/> kindly provide another email account and try again";
         wrongPopupMsg(msgTitle,message);
         openPopupMsg();
         return;
