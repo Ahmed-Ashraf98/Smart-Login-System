@@ -228,7 +228,7 @@ function createUser() {
     // Throw error if inputs are not valid OR email already exists
     var emailIsUsed = emailExists(userEmail.value);
 
-    if(emailIsUsed){
+    if(emailIsUsed != undefined){
         var title =`<span class="text-danger">Can't </span>Create Account`;
         var message = "An account is already available for this email address..., kindly provide another email account and try again";
         wrongInputMsg(title,message);
@@ -377,30 +377,18 @@ userName?.addEventListener("input", function (event) {
 })
 
 userEmail?.addEventListener("keydown", function (event) {
-    if (event.target.getAttribute("data-form-type") == "signup") {
-        validateInput(event.target);
-    }
     validateInput(event.target);
 })
 
 userEmail?.addEventListener("input", function (event) {
-    if (event.target.getAttribute("data-form-type") == "signup") {
-        validateInput(event.target);
-    }
     validateInput(event.target);
 })
 
 userPassword?.addEventListener("keydown", function (event) {
-    if (event.target.getAttribute("data-form-type") == "signup") {
-        validateInput(event.target);
-    }
     validateInput(event.target);
 })
 
 userPassword?.addEventListener("input", function (event) {
-    if (event.target.getAttribute("data-form-type") == "signup") {
-        validateInput(event.target);
-    }
     validateInput(event.target);
 })
 
