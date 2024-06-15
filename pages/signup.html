@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Login System</title>
+    <link
+      rel="shortcut icon"
+      href=".png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body class="start-page vh-100">
+
+    <main class="vh-100 d-flex justify-content-center align-items-center">
+      <section id="loginSection" class="bg-white p-3 p-sm-5 shadow-lg rounded rounded-4">
+        <header class="app-title mb-5"> 
+          <h1>Smart Login System</h1>
+        </header>
+        <div class="login-form d-flex flex-column mb-5">
+          <div class="form-floating mb-3">
+            <input data-form-type="signup" type="text" class="form-control" id="userName" placeholder="">
+            <label for="userName" class="form-label text-secondary">Name</label>
+            <div class="invalid-feedback">
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input data-form-type = "signup" type="email" class="form-control" id="userEmail" placeholder="">
+            <label for="userEmail" class="form-label text-secondary">Email Address</label>
+            <div class="invalid-feedback">
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input data-form-type = "signup" type="password" class="form-control" id="userPassword" placeholder="">
+            <label for="userPassword" class="form-label text-secondary">Password</label>
+            <div class="invalid-feedback">
+            </div>
+          </div>
+          <button id="signUpBtn" class="btn btn-outline-primary">Sign Up</button>
+        </div>
+
+        <div class="other-options">
+          <span>
+            Do you have an account?
+          </span>
+          <a href="../index.html" class="text-decoration-none text-primary">Login</a>
+          
+        </div>
+      </section>
+
+      <!--* Start Of Custom Box  -->
+      <div id="lightBox" class="position-fixed top-0 bottom-0 end-0 start-0 d-none justify-content-center align-items-center">
+        <div id="lightBoxItem" class="position-relative bg-white rounded rounded-2 shadow-lg p-2 p-sm-2 p-md-5">
+          <header id="lightBoxItemHeader" class="rounded rounded-top-2 rounded-bottom-0 position-absolute top-0 end-0 start-0 bg-success d-flex justify-content-center">
+          </header>
+          <div id="lightBoxItemMessage">   
+          </div>
+        </div>
+      </div>
+      <!--! End Of Custom Box  -->
+
+    </main>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

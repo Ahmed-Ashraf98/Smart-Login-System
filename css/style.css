@@ -1,0 +1,37 @@
+
+@font-face {
+    font-family: Nunito;
+    src: url("../webfonts/Nunito/Nunito-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Nunito;
+    src: url("../webfonts/Nunito/Nunito-Medium.ttf");
+    font-weight: 500;
+}
+
+.start-page{
+    font-family:Nunito, sans-serif;
+    background: linear-gradient(346deg, rgba(39,116,170,1) 35%, rgba(23,173,182,1) 100%);
+    background-repeat: no-repeat;
+}
+
+.app-title{
+    color: #050C9C;
+}
+
+#lightBox{
+    z-index: 999;
+    background-color: rgba(0, 0, 0,0.5);
+}
+
+#closeBoxBtn{
+    cursor: pointer;
+}
+
+.navbar-brand{
+    display: inline-block;
+    word-break: break-all;
+    white-space: wrap;
+}
