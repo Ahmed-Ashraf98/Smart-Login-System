@@ -41,14 +41,20 @@ var inputsRegex = {
 // * ============================ [ Start Section ] ===================================
 
 if (localStorage.getItem(usersKey)) {
+    // get all users from the local storage and add the data in the list
     usersList = getUsers();
 }
 
 if (localStorage.getItem(LoggedInUserKey)) {
+    // get logged in user
     currentLoggedInUser = getLoggedInUser();
 }
 
-// console.log(window.location)
+
+/* 
+- If user is already logged in, then navigate automatically to the home page
+- This condition prevents the logged-in user to access the login / signup pages without click on logout button 
+*/ 
 
 if( (window.location.pathname == "/"  || window.location.pathname == "/pages/signup.html" ) && currentLoggedInUser){
     alert("You already logged in, going to home, to sign-out click on sign ou in the home page")
@@ -58,20 +64,39 @@ if( (window.location.pathname == "/"  || window.location.pathname == "/pages/sig
 //* ============================== [ Control Form ] ======================
 
 function isEmpty(element){
+   // This function is to check if the filed is empty or not 
    return element.value == "";
 }
 
 function setInputValidaty(element,feedbackEle,newStatus,classToRmv,classToAdd,msg){
+    // This function is used to :
+    // - Update the input field status
+    // - Mark the input as valid / in-valid
+    // - Add messages in the feedback element
     inputsRegex[element.id].status = newStatus;
     classToRmv && element.classList.remove(classToRmv);
     classToAdd && element.classList.add(classToAdd);
     feedbackEle.innerHTML = msg;
 }
 
+function formIsSignUp(){
+    // This function is used to check if the current form is signup or login
+    // We used userEmail, because it's exits in both forms
+    // With [data-form-type] custom attribute in the input field, we can check if the current form is signup or login
+    if(userEmail.getAttribute("data-form-type") == "signup"){
+       return true;
+    }
+    return false;
+}
+
 function validateInput(element) {
     var eleVal = element.value;
-    // get the div of feedback, the div of feedback is next element of label
+    // Get the feedback element, the div of feedback is next element of label
+    // element.nextElementSibling => label element
+    // element.nextElementSibling.nextElementSibling => div with class feedback
     var feedbackElement = element.nextElementSibling.nextElementSibling;
+
+    // Check if the current form is login or signup
     var isSignUp = formIsSignUp();
 
     //& Notes for Login Page Validation:
@@ -83,27 +108,30 @@ function validateInput(element) {
     // - In the sign-up page we need to check the input pattern
     // - In the sign-up page we need to check if the input is empty or not
 
-    if(isEmpty(element)){
+    if(isEmpty(element)){ // If empty, mark the field as required
       setInputValidaty(element,feedbackElement,false,null,"is-invalid","Field is required");
-    }else{
+    }else{ 
         setInputValidaty(element,feedbackElement,true,"is-invalid",null,null);
     }
     
-    if(isSignUp){
-
-        if(isEmpty(element)){
+    if(isSignUp){ // In case the form noe is Signup, then do the following check
+        
+        // If empty, mark the field as required
+        if(isEmpty(element)){ 
             setInputValidaty(element,feedbackElement,false,"is-valid","is-invalid","Field is required");
         }
-
-        else if (inputsRegex[element.id].pattern.test(eleVal)) {
         
+        // If input value matched patern
+        else if (inputsRegex[element.id].pattern.test(eleVal)) { 
+        
+            // Check if the current element is email, if yes add additional check to see if the email is already used or not
             if (element.id == "userEmail" && emailExists(eleVal) != undefined) {
                 setInputValidaty(element,feedbackElement,false,"is-valid","is-invalid","Account is already available for this email address");
             } else {
                 setInputValidaty(element,feedbackElement,true,"is-invalid","is-valid",null);
             }
     
-        } else {
+        } else { // if input is valid, then remove the error message and mark it as valid
             var msg;
             switch (element.id) {
                 case "userName": msg = "Inavlid User Name";
@@ -120,32 +148,28 @@ function validateInput(element) {
    
 }
 
-
 function validateAllInputs() {
     var isSignUp = formIsSignUp();
-    var startIndex = isSignUp ? 0 : 1; // if not signup don't check name input
+    // if not signup don't check name input [start from index 1 will skip input name]
+    // Without doing this check, we will get an error becasue name field doesn't exists in the lgin page, so you trying to apply things on undefined
+    var startIndex = isSignUp ? 0 : 1; 
     for (let i = startIndex; i < formInputs.length; i++) {
         validateInput(formInputs[i]);
     }
 }
 
-function formIsSignUp(){
-    if(userEmail.getAttribute("data-form-type") == "signup"){
-       return true;
-    }
-    return false;
-}
-
 function allInputsAreValid() {
-    
+    // This function to check all inputs status if all are valid then return true otherwise false
     var isSignUp = formIsSignUp();
+    // if not signup don't check name input status
     return isSignUp ?
         inputsRegex.userName.status && inputsRegex.userEmail.status && inputsRegex.userPassword.status
         : inputsRegex.userEmail.status && inputsRegex.userPassword.status;
 }
 
 function emailExists(email) {
-    // return the index of the user if the email is exists , otherwise return undefined
+    // This function is used in both [ Login / Signup] pages
+    // return the index of the user if the email is exists, otherwise return undefined
     var index;
     for (let i = 0; i < usersList.length; i++) {
         if (usersList[i].email.toLocaleLowerCase() == email.toLocaleLowerCase()) {
@@ -157,15 +181,22 @@ function emailExists(email) {
 }
 
 function passIsMatched(index,password) {
+    // This function is mainly used in the login page, this to check if provided password in the input field matched the the user password in the DB
     return usersList[index].password == password ? true : false;
 }
 
 function resetValidation() {
+
+    // This function is used to reset the [] input status, validation, error messages ]
+    
     var isSignUp = formIsSignUp();
     inputsRegex.userName.status = false;
     inputsRegex.userEmail.status = false;
     inputsRegex.userPassword.status = false;
 
+    // if not signup don't reset name input field
+    // if not signup don't reset name input [start from index 1 will skip input name]
+    // Without doing this check, we will get an error becasue name field doesn't exists in the lgin page, so you trying to apply things on undefined
     var stratVal = isSignUp ? 0 : 1; 
 
     for (var i = stratVal; i < formInputs.length; i++) {
@@ -180,15 +211,22 @@ function resetValidation() {
 }
 
 function clear() {
+    // This function to clear the inputs after successful signup / login
+
+    // if not signup don't clear name input field
+    // Without doing this check, we will get an error becasue name field doesn't exists in the lgin page, so you trying to apply things on undefined
+
     var isSignUp = formIsSignUp();
     userEmail.value = null;
     userPassword.value = null;
     if (isSignUp) userName.value = null;
+
+    // call reset validation to reset the fields status 
     resetValidation();
 }
 
-function wrongInputMsg(title,msg) {
-
+function wrongPopupMsg(title,msg) {
+    // This function take title and message of the error pop-up and add these data in our custom pop-up
     lightBoxItemHeader.classList.remove("bg-success", "justify-content-center");
     lightBoxItemHeader.classList.add("bg-danger", "justify-content-end");
     lightBoxItemHeader.innerHTML = `
@@ -198,8 +236,8 @@ function wrongInputMsg(title,msg) {
     <p>${msg}</p>`
 }
 
-function successMsg(title,msg) {
-
+function successPopupMsg(title,msg) {
+    // This function take title and message of the success pop-up and add these data in our custom pop-up
     lightBoxItemHeader.classList.add("bg-success", "justify-content-center");
     lightBoxItemHeader.classList.remove("bg-danger", "justify-content-end");
     lightBoxItemHeader.innerHTML = `<i class="fa-solid fa-circle-check fs-1 text-white p-3"></i>`;
@@ -210,10 +248,12 @@ function successMsg(title,msg) {
 // * ================= [ Custom Modal ] =======================
 
 function openPopupMsg() {
+    // this method to trigger the pop-up
     lightBox.classList.replace("d-none", "d-flex");
 }
 
 function closePopupMsg() {
+    // this method to close the pop-up
     lightBox.classList.replace("d-flex", "d-none");
 }
 
@@ -222,20 +262,21 @@ function closePopupMsg() {
 function createUser() {
 
 
-    // Validate pattern for all inputs
+    // Validate pattern for all inputs as final check
     validateAllInputs();
 
-    // Throw error if inputs are not valid OR email already exists
+    
     var emailIsUsed = emailExists(userEmail.value);
-
+    // Throw error if email already exists
     if(emailIsUsed != undefined){
         var title =`<span class="text-danger">Can't </span>Create Account`;
         var message = "An account is already available for this email address..., kindly provide another email account and try again";
-        wrongInputMsg(title,message);
+        wrongPopupMsg(title,message);
         openPopupMsg();
         return;
     }
 
+    // Throw error if inputs are not valid
     if (!allInputsAreValid()) {
 
         var title = `<span class="text-danger">Can't </span>Create Account`;
@@ -256,14 +297,13 @@ function createUser() {
         </ul>`;
 
         // Display Pop-up
-        wrongInputMsg(title,message);
+        wrongPopupMsg(title,message);
         openPopupMsg();
         return;
     }
 
-    
 
-    // Start create 
+    // Start create the user 
 
     var user = {
         id: usersList.length,
@@ -272,13 +312,14 @@ function createUser() {
         password: userPassword.value
     };
 
-    usersList.push(user);
-    clear();
-    setUsers(usersList);
-    successMsg();
-    openPopupMsg();
+    usersList.push(user); // add the user into the list
+    clear(); // clear form inputs
+    setUsers(usersList); // add the user in the local storage
+    successPopupMsg(); // set ssignup successful message
+    openPopupMsg(); // Dispaly the popup
 
-    setTimeout(function(){
+    // Automatically redirct the user to the login page after 3s
+    setTimeout(function(){ 
         window.location.pathname = "/";
     }, 3000);
 }
@@ -291,13 +332,32 @@ function loginUser() {
     // Verify if user exists and the credintial is correct
     // Otherwise raise error, this error should be shown after clicking on login button
     
-    // Validate if all inputs not empty
+    // Validate if all inputs are not empty
     validateAllInputs();
 
-    // TODO: make the user mandatory to enter the required fields
-    console.log(inputsRegex)
+    // If one of the fields is empty, then throw an error
     if(!allInputsAreValid()){
-        wrongInputMsg(`<span class="text-danger">Can't </span>Login`,"All Fields Are Required");
+        wrongPopupMsg(`<span class="text-danger">Can't </span>Login`,"All Fields Are Required");
+        openPopupMsg();
+        return;
+    }
+
+    // If all fields are filled,then check if the email is in the storage or not
+    var userIndex = emailExists(userEmail.value);
+
+    // if there is no user with this email, then throw an error
+    if(userIndex == undefined){
+        wrongPopupMsg(`<span class="text-danger">Can't </span>Login`,"User email doesn't exists");
+        openPopupMsg();
+        return;
+    }
+
+    // if there is a user with this email, then check the password
+    var passIsCorrect = passIsMatched(userIndex,userPassword.value)
+
+    // if the provided password not matched the password in the storage, then throw an error
+    if(!passIsCorrect){
+        wrongPopupMsg(`<span class="text-danger">Can't </span>Login`,"The password for this account is not correct , please try again");
         openPopupMsg();
         return;
     }
@@ -306,34 +366,10 @@ function loginUser() {
     - If email is correct and the password as well, then go to home page
     */
 
-
-
-    var userIndex = emailExists(userEmail.value);
-
-    if(userIndex == undefined){
-        wrongInputMsg(`<span class="text-danger">Can't </span>Login`,"User email doesn't exists");
-        openPopupMsg();
-        return;
-    }
-
-    var passIsCorrect = passIsMatched(userIndex,userPassword.value)
-    if(!passIsCorrect){
-        wrongInputMsg(`<span class="text-danger">Can't </span>Login`,"The password for this account is not correct , please try again");
-        openPopupMsg();
-        return;
-    }
-
-    var userObj = usersList[userIndex];
-    
-    // Todo:
-    // 1- Get the user obj fro DB 
-    // 2- Add the user Obj in the login storage
-    // 3- Clear the form
-    // 4- Go to home page directly
-
-    setLoggedInUser(userObj);
-    clear();
-    window.location.pathname = "/pages/home.html";
+    var userObj = usersList[userIndex]; // get the user details
+    setLoggedInUser(userObj); // set the current logged-in user 
+    clear(); // clear the form after successful login
+    window.location.pathname = "/pages/home.html"; // navigate to home page automatically 
 }
 
 
